@@ -3,14 +3,14 @@
 
 using namespace std;
 
-my_class::my_class() : _string("") {
+my_class::my_class() : _str() {
     // Constructeur par défaut
 }
 
-my_class::my_class(std::string str) : _string(str) {
+my_class::my_class(string& str) : _str(str) {
     // Constructeur avec paramètre
 }
 
-void my_class::print_my_element(std::string _string) {
-    cout << "My element is: " << _string << endl;
+void my_class::print_my_element(string& _str) {
+    cout << "My element is: " << _str << endl;
 }

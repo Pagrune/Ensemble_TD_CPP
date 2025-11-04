@@ -9,13 +9,12 @@
 class my_class
     {
     private:
-        std::string _string;
+        std::string _str;
     public:
         my_class();
-        my_class(std::string str);
-        ~my_class();
-        
-        void print_my_element(std::string _string);
+        my_class(std::string& _str);
+
+        void print_my_element(std::string& _str);
     
     };
 
