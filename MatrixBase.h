@@ -9,9 +9,10 @@ class MatrixBase {
         std::vector<std::vector<T>> data_;
         std::size_t rows;
         std::size_t cols;
+
     public:
         MatrixBase();
-        MatrixBase(std::size_t rows, std::size_t cols, const std::vector<std::vector<T>>& data);
+        MatrixBase(std::size_t rows, std::size_t cols, T init_data);
 
         void addElement(int row, int col, T value);
 

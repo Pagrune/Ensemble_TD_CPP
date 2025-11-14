@@ -5,8 +5,8 @@ template <typename T>
 MatrixBase<T>::MatrixBase() : rows(0), cols(0) {}
 
 template <typename T>
-MatrixBase<T>::MatrixBase(std::size_t rows, std::size_t cols, const std::vector<std::vector<T>>& data)
-    : rows(rows), cols(cols), data_(data) {}
+MatrixBase<T>::MatrixBase(std::size_t rows, std::size_t cols, T init_data)
+    : rows(rows), cols(cols), data_(rows, std::vector<T>(cols, init_data)) {}
 
 template <typename T>
 void MatrixBase<T>::addElement(int row, int col, T value) {
