@@ -5,7 +5,7 @@
 class MatrixNumerical : public MatrixBase<double>{
     public:
         MatrixNumerical();
-        MatrixNumerical(std::size_t rows, std::size_t cols, const std::vector<std::vector<double>>& data);
+        MatrixNumerical(std::size_t rows, std::size_t cols, double init_data);
 
         double getDeterminant() const;
 };
