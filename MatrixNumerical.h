@@ -13,8 +13,11 @@ class MatrixNumerical : public MatrixBase<double>{
         MatrixNumerical operator+(const MatrixNumerical& other) const;
         MatrixNumerical operator-(const MatrixNumerical& other) const;
         MatrixNumerical operator*(const MatrixNumerical& other) const;
+        MatrixNumerical operator/(const MatrixNumerical& other) const;
 
         MatrixNumerical getInverse() const;
+
+        static MatrixNumerical getIdentity(int n);
     private:
         MatrixNumerical getCoFactor(std::size_t p, std::size_t q) const;
 

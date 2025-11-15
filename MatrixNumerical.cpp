@@ -133,3 +133,16 @@ MatrixNumerical MatrixNumerical::getInverse() const {
 
     return inv;
 }
+
+MatrixNumerical MatrixNumerical::operator/(const MatrixNumerical& other) const {
+    MatrixNumerical other_inv = other.getInverse();
+    return (*this) * other_inv;
+}
+
+MatrixNumerical MatrixNumerical::getIdentity(int n) {
+    MatrixNumerical identity(n, n, 0.0);
+    for (int i = 0; i < n; ++i) {
+        identity.addElement(i, i, 1.0);
+    }
+    return identity;
+}

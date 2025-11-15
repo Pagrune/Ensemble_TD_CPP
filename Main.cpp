@@ -27,6 +27,8 @@ int main() {
 
     MatrixNumerical N(2, 2, 2);
     std::cout << std::endl << "Matrice N :" << std::endl;
+    N.addElement(0, 1, 4);
+    N.addElement(1, 0, 6);
     N.Display();
 
     MatrixNumerical P = M + N;
@@ -45,6 +47,16 @@ int main() {
     MatrixNumerical inv = M.getInverse();
     std::cout << std::endl << "Inverse de M:" << std::endl;
     inv.Display();
+
+
+    MatrixNumerical S = M / N;
+    std::cout << std::endl << "Matrice M / N:" << std::endl;
+    S.Display();
+
+    // Matrice identité
+    MatrixNumerical I = MatrixNumerical::getIdentity(3);
+    std::cout << std::endl << "Matrice identité 3x3:" << std::endl;
+    I.Display();
 
     return 0;
 }
