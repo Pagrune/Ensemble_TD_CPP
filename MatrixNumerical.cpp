@@ -1,17 +1,40 @@
 #include "MatrixNumerical.h"
+#include <stdexcept>
 
 MatrixNumerical::MatrixNumerical(std::size_t rows, std::size_t cols, double init_data)
     : MatrixBase<double>(rows, cols, init_data) {}
 
 
 double MatrixNumerical::getDeterminant() const {
-    // Implémentation simple pour les matrices 2x2
+    // Cas 1 : matrice 1x1
+    if (rows == 1 && cols == 1) {
+        return data_[0][0];
+    }
+
+    // Cas 2 : matrice 2x2
     if (rows == 2 && cols == 2) {
         return data_[0][0] * data_[1][1] - data_[0][1] * data_[1][0];
-    } else {
-        throw std::logic_error("Determinant calculation is only implemented for 2x2 matrices.");
     }
+
+    // Cas général : matrice nxn
+    if (rows != cols) {
+        throw std::logic_error("Determinant undefined for non-square matrix");
+    }
+
+    double det = 0.0;
+
+    // Développement par la première ligne
+    for (std::size_t j = 0; j < cols; j++) {
+        MatrixNumerical cof = getCoFactor(0, j);
+
+        double sign = (j % 2 == 0) ? 1.0 : -1.0;
+
+        det += sign * data_[0][j] * cof.getDeterminant();
+    }
+
+    return det;
 }
+
 
 MatrixNumerical MatrixNumerical::operator+(const MatrixNumerical& other) const {
     if (rows != other.rows || cols != other.cols) {
@@ -57,4 +80,56 @@ MatrixNumerical MatrixNumerical::operator*(const MatrixNumerical& other) const {
         }
     }
     return result;
+}
+
+MatrixNumerical MatrixNumerical::getCoFactor(std::size_t p, std::size_t q) const {
+    MatrixNumerical result(rows - 1, cols - 1, 0.0);
+
+    std::size_t r = 0, c = 0;
+
+    for (std::size_t i = 0; i < rows; i++) {
+        if (i == p) continue;
+
+        c = 0;
+        for (std::size_t j = 0; j < cols; j++) {
+            if (j == q) continue;
+
+            result.addElement(r, c, this->data_[i][j]);
+            c++;
+        }
+        r++;
+    }
+    return result;
+}
+
+MatrixNumerical MatrixNumerical::getInverse() const {
+    double det = getDeterminant();
+    if (det == 0)
+        throw std::runtime_error("Matrix is singular, no inverse exists.");
+
+    MatrixNumerical adj(rows, cols, 0.0);
+
+    // Calcul de l'adjointe (matrice des cofacteurs transposée)
+    for (std::size_t i = 0; i < rows; i++) {
+        for (std::size_t j = 0; j < cols; j++) {
+            MatrixNumerical cof = getCoFactor(i, j);
+
+            double sign = ((i + j) % 2 == 0) ? 1 : -1;
+            double value = sign * cof.getDeterminant();
+
+            // on transpose en même temps (adjointe = transposée des cofacteurs)
+            adj.addElement(j, i, value);
+        }
+    }
+
+    // Division par le déterminant → inverse
+    MatrixNumerical inv(rows, cols, 0.0);
+
+    for (std::size_t i = 0; i < rows; i++) {
+        for (std::size_t j = 0; j < cols; j++) {
+            inv.addElement(i, j, adj.getElement(i, j) / det);
+        }
+    }
+
+    return inv;
 }
