@@ -8,6 +8,12 @@ class MatrixNumerical : public MatrixBase<double>{
         MatrixNumerical(std::size_t rows, std::size_t cols, double init_data);
 
         double getDeterminant() const;
+
+        // Définir les opérateurs spécifiques aux matrices 
+        MatrixNumerical operator+(const MatrixNumerical& other) const;
+        MatrixNumerical operator-(const MatrixNumerical& other) const;
+        MatrixNumerical operator*(const MatrixNumerical& other) const;
+
 };
 
 #endif
